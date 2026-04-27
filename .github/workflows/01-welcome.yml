@@ -7,11 +7,15 @@ jobs:
   hello:
     runs-on: ubuntu-latest
     steps:
-      - name: welcome
+      - name: 1. 환영 인사
         run: echo "=== 환영합니다! ==="
-      - name: Runner 정보 확인
+        
+      - name: 2. 상세 정보 (멀티라인)
         run: |
           echo "오늘은 당신의 첫 출근일입니다"
           echo "프로젝트: GitHub Actions 학습"
           echo "팀: DevOps"
-          echo "Runner OS: Linux"
+          echo "Runner OS: $RUNNER_OS"
+
+      - name: 3. 마무리 인사
+        run: echo "=== 행운을 빕니다! ==="
