@@ -1,0 +1,36 @@
+name: Build Info Simulation
+on:
+  workflow_dispatch:
+
+env: # [1] 워크플로우 레벨 (전역 변수)
+  APP_NAME: MyApp
+  BUILD_ENV: production
+  VERSION: 1.0.0
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env: # [2] Job 레벨 (이 Job 안에서는 전역 변수보다 우선)
+      BUILD_ENV: staging
+    steps:
+      - name: 1. 워크플로우 레벨 변수 확인
+        run: |
+          echo "APP_NAME: $APP_NAME"
+          echo "VERSION: $VERSION"
+          echo "BUILD_ENV: $BUILD_ENV" # staging 출력 예상
+
+      - name: 2. Step 레벨로 BUILD_ENV 덮어쓰기
+        env: # [3] Step 레벨 (이 Step 안에서만 최우선)
+          BUILD_ENV: development
+        run: |
+          echo "APP_NAME: $APP_NAME"
+          echo "VERSION: $VERSION"
+          echo "BUILD_ENV: $BUILD_ENV" # development 출력 예상
+
+      - name: 3. 최종 빌드 정보
+        run: |
+          echo "=== 빌드 완료 ==="
+          echo "App: $APP_NAME"
+          echo "Version: $VERSION"
+          echo "Environment: $BUILD_ENV" # 다시 staging 출력 예상 (Step 2 영향 끝남)
+          echo "=== 끝 ==="
