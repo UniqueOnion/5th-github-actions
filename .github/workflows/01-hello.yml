@@ -1,6 +1,5 @@
-# .github/workflows/01-hello.yml
-
 name: 01. Hello GitHub Actions
+run-name: "[01] ${{ github.actor }}의 실행"   # 추가
 on:
   workflow_dispatch
 
